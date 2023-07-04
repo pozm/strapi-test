@@ -6,7 +6,10 @@ import { cookies } from "next/headers"
 import crypto from "crypto"
 import { EncryptCookie } from "./cookieSecret";
 
-
+export async function Logout() {
+    console.log("attempt logout")
+    cookies().delete("a:u")
+}
 
 export async function SubmitLoginData(data :FormData) {
     let username = data.get("username");

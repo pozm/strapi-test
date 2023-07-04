@@ -1,5 +1,4 @@
 import crypto from "crypto"
-import NodeRsa from "node-rsa"
 let key = process.env.COOKIESECRET as string
 let iv = process.env.IVSECRET as string
 
@@ -12,7 +11,9 @@ export function EncryptCookie(cookiev : string) {
     return encrypted;
   }
 export function DecryptCookie(cookiev : string) {
-
+    if (cookiev.trim() == "") {
+        return "";
+    }
     let decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
     let decrypted = decipher.update(cookiev, 'base64', 'utf8');
     return (decrypted + decipher.final('utf8'));

@@ -83,8 +83,6 @@ export default async function BlogPost({params} : {params : {post_id:string}}) {
     let user = blog.data.attributes?.blog_user?.data
     let user_pic = user ?("http://127.0.0.1:1337" + user.attributes.avatar.data.attributes.url) : undefined
 
-    console.log(user);
-
     // render the blog post
 
 

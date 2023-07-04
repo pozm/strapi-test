@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 import Link from "next/link"
 import { fetchUser, fetchUserWithAvatar, getUserId } from "./auth/utils"
+import { Logout } from "./auth/actions"
 
 export const metadata: Metadata = {
   title: {
@@ -24,6 +25,7 @@ export default async function BlogLayout({
           <div className="w-full items-center flex flex-row bg-fuchsia-900/20 backdrop-blur-md p-1 rounded-lg sticky top-2" >
             <Link href={"/blog"} ><button className="m-1 px-2 py-1 rounded-lg bg-indigo-400" >Blog root</button></Link>
             {loggedIn && <Link href={"/blog/new"} ><button className="m-1 px-2 py-1 rounded-lg bg-blue-400" >New Blog</button></Link>}
+            {loggedIn && <form><button formAction={Logout}  className="m-1 px-2 py-1 rounded-lg bg-red-400" >Log out</button></form>}
             {!loggedIn && <Link href={"/blog/auth/login"} ><button className="m-1 px-2 py-1 rounded-lg bg-purple-400" >Login</button></Link>}
             {fuser && <div className="flex flex-row items-center ml-auto" >
               <p>Logged in as {fuser.attributes.Username}</p>
