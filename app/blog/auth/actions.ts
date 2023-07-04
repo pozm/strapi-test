@@ -7,7 +7,6 @@ import crypto from "crypto"
 import { EncryptCookie } from "./cookieSecret";
 
 export async function Logout() {
-    console.log("attempt logout")
     cookies().delete("a:u")
 }
 
@@ -17,9 +16,8 @@ export async function SubmitLoginData(data :FormData) {
     let remember = data.get("remember");
 
     
-    let wd = /\w+/gmi
-    
-    if (!String(username).match(wd) || !String(password).match(wd)) {
+    let wd = /^\w+$/mi
+    if (!wd.test(String(username)) || !wd.test(String(password))) {
         console.log("bad username or password")
         return;
     }
@@ -27,7 +25,7 @@ export async function SubmitLoginData(data :FormData) {
     
     console.log(user);
     
-    if (!user && !("id" in user)) {
+    if (!user || !("id" in user)) {
         
         return;
     }
