@@ -3,9 +3,15 @@
 import axios from "axios";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { getUserId } from "../auth/utils";
 
 export async function SubmitData(data :FormData) {
     "use server";
+    let userId = getUserId();
+    if (!userId) {
+        return;
+    }
+
     let Title = data.get("title") as string;
     let Keywords = data.get("kew") as string;
     let Content = data.get("content") as string;
@@ -22,6 +28,7 @@ export async function SubmitData(data :FormData) {
 
     let enhanceContent = await axios.post("http://localhost:3000/blog/new/api",{
         keywords:Keywords,
+        jdaj:"82kjfakh29",
         content:Content
     });
 
@@ -30,7 +37,8 @@ export async function SubmitData(data :FormData) {
         data:{
             Title,
             Content : enhanceContent.data.content,
-            Cover:response.data[0].id
+            Cover:response.data[0].id,
+            blog_user: userId
         }},
         {headers:{
             "Authorization":"Bearer " + process.env.STRAPI_TOKEN as string,

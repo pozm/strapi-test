@@ -63,7 +63,7 @@ export default async function BlogPost({params} : {params : {post_id:string}}) {
 
 
 
-    let blog = await axios.get(`http://127.0.0.1:1337/api/blog-posts/${params.post_id}?populate=Cover`,{
+    let blog = await axios.get(`http://127.0.0.1:1337/api/blog-posts/${params.post_id}?populate[blog_user][populate]=avatar&populate=Cover`,{
         headers:
         {
             "Authorization":"Bearer " + process.env.STRAPI_TOKEN as string,
@@ -72,10 +72,18 @@ export default async function BlogPost({params} : {params : {post_id:string}}) {
         },
           
     }).then(res => res.data,c=>console.log(c));
+
+    
     
     if (!blog?.data) {
         return notFound();
     }
+
+
+    let user = blog.data.attributes?.blog_user?.data
+    let user_pic = user ?("http://127.0.0.1:1337" + user.attributes.avatar.data.attributes.url) : undefined
+
+    console.log(user);
 
     // render the blog post
 
@@ -85,6 +93,10 @@ export default async function BlogPost({params} : {params : {post_id:string}}) {
     return <div className="p-4" >
 
         <h1 className="text-5xl text-white">{blog.data.attributes.Title}</h1>
+        {user && <div className="flex flex-row items-center" >
+            <h2 className="text-2xl mr-3" >✨Posted by {user.attributes.Username} </h2>
+            {user_pic && <img className="rounded-full object-cover aspect-square"  width={40} height={40} src={user_pic} />}
+        </div>}
         <MDXRemote components={components} options={{
             mdxOptions:{
 
