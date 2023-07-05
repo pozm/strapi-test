@@ -1,16 +1,10 @@
 import axios from 'axios';
 import BlogPreviewCard from './BlogPreviewCard';
+import { AxiosClient } from '../axiosc';
 
 export default async function BlogHome() {
-  let blogs = await axios.get("http://127.0.0.1:1337/api/blog-posts?populate=Cover",{
-    headers:
-      {
-        "Authorization":"Bearer " + process.env.STRAPI_TOKEN as string,
-        host:"127.0.0.1:1337",
-        Accept:"*/*"
-      },
-      
-  }).then(res => res.data,c=>console.log(c));
+  let blogs = await AxiosClient.get(`${process.env.STRAPI_URL}/api/blog-posts?populate=Cover`)
+    .then(res => res.data,c=>console.log(c));
   console.log(blogs.data[0].attributes.Cover.data.attributes);
   return <div>
     <h1 className='text-4xl' >Welcome to my shitty blog</h1>

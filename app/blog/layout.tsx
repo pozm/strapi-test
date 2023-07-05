@@ -18,7 +18,7 @@ export default async function BlogLayout({
 
     let loggedIn = getUserId();
     let fuser = loggedIn ? await fetchUserWithAvatar(loggedIn) : undefined
-    let fpfp = fuser ? "http://localhost:1337" + fuser.attributes.avatar.data.attributes.url : undefined
+    let fpfp = fuser ? process.env.STRAPI_URL + fuser.attributes.avatar.data.attributes.url : undefined
 
     return (
         <div className={"h-vh p-2"}>

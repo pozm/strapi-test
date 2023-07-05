@@ -15,27 +15,30 @@ export async function SubmitLoginData(data :FormData) {
     let password = data.get("password");
     let remember = data.get("remember");
 
-    
+    // confirm that the username and password only contains alphanumeric 
+    // to prevent content injection or whatever
+
     let wd = /^\w+$/mi
     if (!wd.test(String(username)) || !wd.test(String(password))) {
         console.log("bad username or password")
         return;
     }
-    let user = await AxiosClient.get(`http://localhost:1337/api/blog-users?filters[Username][$eq]=${username}&filters[Pass][$eq]=${password}`).then(res => res.data.data[0],err => null);
+    let user = await AxiosClient.get(`${process.env.STRAPI_URL}/api/blog-users?filters[Username][$eq]=${username}&filters[Pass][$eq]=${password}`).then(res => res.data.data[0],err => null);
     
-    console.log(user);
+    // check that a user was found
     
     if (!user || !("id" in user)) {
         
         return;
     }
+
+    // store the user id in the cookie
     let cookie_store = cookies();
     
     let enc_id = EncryptCookie(String(user.id))
 
     cookie_store.set("a:u",enc_id)
 
-    console.log("logged in")
 
     return;
     

@@ -10,9 +10,13 @@ export async function POST(request:NextRequest) {
 
     let data = await request.json();
 
-    if (data.jdaj != "82kjfakh29") {
+    // "secret" key
+
+    if (data.jdaj != process.env.OPENAIK) {
         return;
     }
+
+    // send content to open ai
 
     let aiRes = await openai.createCompletion({
         model: "text-davinci-003",
@@ -23,5 +27,7 @@ export async function POST(request:NextRequest) {
         temperature: .2,
     
     }).then(r=>r.data,f=>console.log(f.data)) as CreateCompletionResponse;
+
+    
     return NextResponse.json({content:aiRes.choices[0].text});
 }
