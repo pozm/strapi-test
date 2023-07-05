@@ -29,7 +29,7 @@ export async function SubmitData(data :FormData) {
     form.append("files",image,image.name);
 
 
-    const response = await AxiosClient.post(`${process.env.STRAPI_URL}/api/upload`, form);
+    const response = await AxiosClient.post(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/upload`, form);
 
     // send content to open ai
 
@@ -41,7 +41,7 @@ export async function SubmitData(data :FormData) {
 
     // upload all data and make a post in strapi
 
-    let resData = (await AxiosClient.post(`${process.env.STRAPI_URL}/api/blog-posts`,{
+    let resData = (await AxiosClient.post(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/blog-posts`,{
         data:{
             Title,
             Content : enhanceContent.data.content,

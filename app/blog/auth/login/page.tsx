@@ -1,6 +1,4 @@
 import { SubmitLoginData } from "../actions";
-import { cookies } from "next/headers";
-import { DecryptCookie } from "../cookieSecret";
 import { getUserId } from "../utils";
 
 export default function LoginPage() {

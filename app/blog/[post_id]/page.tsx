@@ -1,5 +1,4 @@
-import axios from "axios";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { Metadata } from "next";
 import { AxiosClient } from "@/app/axiosc";
@@ -24,7 +23,7 @@ export async function generateMetadata({params} : {params : {post_id:string}}) :
 
 
 
-    let blog = await AxiosClient.get(`${process.env.STRAPI_URL}/api/blog-posts/${params.post_id}?populate=Cover`)
+    let blog = await AxiosClient.get(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/blog-posts/${params.post_id}?populate=Cover`)
         .then(res => res.data,c=>console.log(c));
 
     return {
@@ -58,7 +57,7 @@ export default async function BlogPost({params} : {params : {post_id:string}}) {
 
 
 
-    let blog = await AxiosClient.get(`${process.env.STRAPI_URL}/api/blog-posts/${params.post_id}?populate[blog_user][populate]=avatar&populate=Cover`)
+    let blog = await AxiosClient.get(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/blog-posts/${params.post_id}?populate[blog_user][populate]=avatar&populate=Cover`)
         .then(res => res.data,c=>console.log(c));
 
     
@@ -69,7 +68,7 @@ export default async function BlogPost({params} : {params : {post_id:string}}) {
 
 
     let user = blog.data.attributes?.blog_user?.data
-    let user_pic = user ?(process.env.STRAPI_URL + user.attributes.avatar.data.attributes.url) : undefined
+    let user_pic = user ?(process.env.NEXT_PUBLIC_STRAPI_URL + user.attributes.avatar.data.attributes.url) : undefined
 
     // render the blog post
 
@@ -89,6 +88,6 @@ export default async function BlogPost({params} : {params : {post_id:string}}) {
             }
         }} source={blog.data.attributes.Content} />
 
-        <img src={process.env.STRAPI_URL + blog.data.attributes?.Cover?.data?.attributes?.url } />
+        <img src={process.env.NEXT_PUBLIC_STRAPI_URL + blog.data.attributes?.Cover?.data?.attributes?.url } />
     </div>
 }

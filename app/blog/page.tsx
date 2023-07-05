@@ -1,9 +1,8 @@
-import axios from 'axios';
 import BlogPreviewCard from './BlogPreviewCard';
 import { AxiosClient } from '../axiosc';
 
 export default async function BlogHome() {
-  let blogs = await AxiosClient.get(`${process.env.STRAPI_URL}/api/blog-posts?populate=Cover`)
+  let blogs = await AxiosClient.get(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/blog-posts?populate=Cover`)
     .then(res => res.data,c=>console.log(c));
   console.log(blogs.data[0].attributes.Cover.data.attributes);
   return <div>

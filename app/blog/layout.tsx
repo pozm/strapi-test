@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import Link from "next/link"
-import { fetchUser, fetchUserWithAvatar, getUserId } from "./auth/utils"
+import { fetchUserWithAvatar, getUserId } from "./auth/utils"
 import { Logout } from "./auth/actions"
 
 export const metadata: Metadata = {
@@ -18,7 +18,7 @@ export default async function BlogLayout({
 
     let loggedIn = getUserId();
     let fuser = loggedIn ? await fetchUserWithAvatar(loggedIn) : undefined
-    let fpfp = fuser ? process.env.STRAPI_URL + fuser.attributes.avatar.data.attributes.url : undefined
+    let fpfp = fuser ? process.env.NEXT_PUBLIC_STRAPI_URL + fuser.attributes.avatar.data.attributes.url : undefined
 
     return (
         <div className={"h-vh p-2"}>

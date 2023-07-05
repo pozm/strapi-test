@@ -14,7 +14,7 @@ export default function BlogPreviewCard(props:BlogPreviewCardProps) {
         <h2 className='text-xl' >{props.post.attributes.Title}</h2>
         <p className='overflow-ellipsis' >{props.post.attributes.Content.slice(0,100)+"..."}</p>
         {props.post.attributes.Cover?.data?.attributes?.url &&
-            <img className="rounded-xl mx-auto my-3" src={"http://127.0.0.1:1337" + props.post.attributes.Cover.data.attributes.url} height={props.post.attributes.Cover.data.attributes.height} width={props.post.attributes.Cover.data.attributes.width} alt={props.post.attributes.Cover.data.attributes.name} />
+            <img className="rounded-xl mx-auto my-3" src={process.env.NEXT_PUBLIC_STRAPI_URL + props.post.attributes.Cover.data.attributes.url} height={props.post.attributes.Cover.data.attributes.height} width={props.post.attributes.Cover.data.attributes.width} alt={props.post.attributes.Cover.data.attributes.name} />
         }
         </div>
     </Link>

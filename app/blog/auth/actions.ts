@@ -1,9 +1,6 @@
 "use server";
 import { AxiosClient } from "@/app/axiosc";
-import axios from "axios";
-
 import { cookies } from "next/headers"
-import crypto from "crypto"
 import { EncryptCookie } from "./cookieSecret";
 
 export async function Logout() {
@@ -23,7 +20,7 @@ export async function SubmitLoginData(data :FormData) {
         console.log("bad username or password")
         return;
     }
-    let user = await AxiosClient.get(`${process.env.STRAPI_URL}/api/blog-users?filters[Username][$eq]=${username}&filters[Pass][$eq]=${password}`).then(res => res.data.data[0],err => null);
+    let user = await AxiosClient.get(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/blog-users?filters[Username][$eq]=${username}&filters[Pass][$eq]=${password}`).then(res => res.data.data[0],err => null);
     
     // check that a user was found
     
